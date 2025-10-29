@@ -1,378 +1,233 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Letra Traduzida — Halloween Live</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Letras de Metal</title>
 <style>
-  html, body {
+  body {
     margin: 0;
-    padding: 0;
-    height: 100%;
-    background: #00FF00; /* Chroma key verde */
+    background-color: #00FF00; /* fundo verde para chroma */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    font-family: Arial, sans-serif; /* fácil leitura em celular */
     color: white;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
   }
-
-  .stage {
-    max-width: 1200px;
-    width: 90%;
+  #container {
     text-align: center;
+    max-width: 90%;
   }
-
-  .title {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+  .verse {
+    font-size: 3em; /* grande e legível */
+    text-shadow:
+       -2px -2px 0 #000,
+        2px -2px 0 #000,
+       -2px 2px 0 #000,
+        2px 2px 0 #000; /* contorno preto */
   }
-
-  .lyrics-box {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    font-size: 28px;
-    line-height: 1.5;
-    text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
-  }
-
-  .line {
-    margin-bottom: 4px;
-  }
-
-  .translation {
-    font-size: 22px;
-    color: #ddd;
-    text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
-  }
-
-  .controls {
-    margin-top: 24px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .kbd {
-    background: #00000088;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-weight: 700;
-    color: white;
-  }
-
-  @media (max-width:600px){
-    .title { font-size: 28px; }
-    .lyrics-box { font-size: 20px; }
-    .translation { font-size: 16px; }
-    .kbd { padding: 6px 10px; }
+  .english {
+    font-size: 2em;
+    margin-top: 0.5em;
+    text-shadow:
+       -2px -2px 0 #000,
+        2px -2px 0 #000,
+       -2px 2px 0 #000,
+        2px 2px 0 #000;
   }
 </style>
 </head>
 <body>
-  <div class="stage">
-    <div class="title" id="songTitle">Carregando...</div>
-    <div class="lyrics-box" id="lyricsBox"></div>
-
-    <div class="controls">
-      <div class="kbd">← Verso</div>
-      <div class="kbd">→ Verso</div>
-      <div class="kbd">↑ Música</div>
-      <div class="kbd">↓ Música</div>
-    </div>
-  </div>
+<div id="container">
+  <div id="verse" class="verse"></div>
+  <div id="english" class="english"></div>
+</div>
 
 <script>
 const songs = [
   {
     title: "Adagio - Kissing the Crow",
     verses: [
-      [
-        {pt:"Deixe-me sentir suas mãos,", en:"Let me feel your hands,"},
-        {pt:"Acima das margens do céu ausente,", en:"Above those shores of absent heavens,"},
-        {pt:"Sinal da cruz no meu peito,", en:"Sign of cross on my chest,"},
-        {pt:"Me ajuda a acreditar no meu descanso", en:"Helps me believing in my rest"},
-        {pt:"Corvo triste em pé em galhos mortos", en:"Sad crow standing on dead twigs"},
-        {pt:"Assobia meu lamento em suas asas,", en:"Whistling my finest hour on his wings,"},
-        {pt:"A sombra do pássaro negro me guia,", en:"Black bird shadow counting out,"},
-        {pt:"Conduzindo-me ao meu destino final.", en:"To lead me on my ending future"},
-        {pt:"Eu estarei para sempre gritando seu nome,", en:"I'll be forever screaming your name,"},
-        {pt:"Meus feitiços abençoarão seu coração", en:"My spells will bless your heart"},
-        {pt:"Eu estarei para sempre gritando o seu nome", en:"I'll be forever screaming your name"},
-        {pt:"Mesmo que o relógio continue a marcar as horas", en:"Even if the clock keeps ticking"},
-        {pt:"O triste poema do meu último suspiro", en:"The sad poem of my last breathing"},
-        {pt:"Minha alma está desaparecendo lentamente,", en:"My soul is slowly fading,"},
-        {pt:"Para sempre, estou fracassando", en:"Forever, I am failing"},
-        {pt:"Eu estarei para sempre gritando seu nome,", en:"I'll be forever screaming your name,"},
-        {pt:"Meus feitiços abençoarão seu coração", en:"My spells will bless your heart"},
-        {pt:"Eu estarei para sempre gritando o seu nome", en:"I'll be forever screaming your name"}
-      ]
+      {pt: "Deixe-me sentir suas mãos,", en: "Let me feel your hands,"},
+      {pt: "Acima das margens do céu ausente,", en: "Above those shores of absent heavens,"},
+      {pt: "Sinal da cruz no meu peito,", en: "Sign of cross on my chest,"},
+      {pt: "Me ajuda a acreditar no meu descanso", en: "Helps me believing in my rest"},
+      {pt: "Corvo triste em pé em galhos mortos", en: "Sad crow standing on dead twigs"},
+      {pt: "Assobia meu lamento em suas asas,", en: "Whistling my finest hour on his wings,"},
+      {pt: "A sombra do pássaro negro me guia,", en: "Black bird shadow counting out,"},
+      {pt: "Conduzindo-me ao meu destino final.", en: "To lead me on my ending future"},
+      {pt: "Eu estarei para sempre gritando seu nome,", en: "I'll be forever screaming your name,"},
+      {pt: "Meus feitiços abençoarão seu coração", en: "My spells will bless your heart"},
+      {pt: "Eu estarei para sempre gritando o seu nome", en: "I'll be forever screaming your name"},
+      {pt: "Mesmo que o relógio continue a marcar as horas", en: "Even if the clock keeps ticking"},
+      {pt: "O triste poema do meu último suspiro", en: "The sad poem of my last breathing"},
+      {pt: "Minha alma está desaparecendo lentamente,", en: "My soul is slowly fading,"},
+      {pt: "Para sempre, estou fracassando", en: "Forever, I am failing"},
+      {pt: "Eu estarei para sempre gritando seu nome,", en: "I'll be forever screaming your name,"},
+      {pt: "Meus feitiços abençoarão seu coração", en: "My spells will bless your heart"},
+      {pt: "Eu estarei para sempre gritando o seu nome", en: "I'll be forever screaming your name"}
     ]
   },
   {
     title: "Rammstein - Sonne",
     verses: [
-      [
-        {pt:"Um, dois, três", en:"Eins, zwei, drei"},
-        {pt:"Quatro, cinco, seis", en:"Vier, fünf, sechs"},
-        {pt:"Sete, oito, nove", en:"Sieben, acht, neun"},
-        {pt:"Sai", en:"Aus"},
-        {pt:"Todos esperam pela luz", en:"Alle warten auf das Licht"},
-        {pt:"Sintam medo, não sintam medo", en:"Fürchtet euch, fürchtet euch nicht"},
-        {pt:"O Sol se ilumina dos meus olhos", en:"Die Sonne scheint mir aus den Augen"},
-        {pt:"Ele não irá se pôr esta noite", en:"Sie wird heute Nacht nicht untergehen"},
-        {pt:"E o mundo conta alto até dez", en:"Und die Welt zählt laut bis zehn"},
-        {pt:"(Um)", en:"(Eins)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Dois)", en:"(Zwei)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Três) ela é a estrela mais brilhante de todas", en:"(Drei) sie ist der hellste Stern von allen"},
-        {pt:"(Quatro)", en:"(Vier)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"O Sol se ilumina das minhas mãos", en:"Die Sonne scheint mir raus den Händen"},
-        {pt:"Pode queimar, pode os cegar", en:"Kann verbrennen, kann euch blenden"},
-        {pt:"Quando ele irrompe dos meus punhos", en:"Wenn sie aus den Fäusten bricht"},
-        {pt:"Se deita quente sobre o rosto", en:"Legt sich heiß auf das Gesicht"},
-        {pt:"Ele não irá se pôr esta noite", en:"Sie wird heute Nacht nicht untergehen"},
-        {pt:"E o mundo conta alto até dez", en:"Und die Welt zählt laut bis zehn"},
-        {pt:"(Um)", en:"(Eins)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Dois)", en:"(Zwei)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Três) ela é a estrela mais brilhante de todas", en:"(Drei) sie ist der hellste Stern von allen"},
-        {pt:"(Quatro)", en:"(Vier)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Cinco)", en:"(Fünf)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Seis)", en:"(Sechs)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Sete) ela é a estrela mais brilhante de todas", en:"(Sieben) sie ist der hellste Stern von allen"},
-        {pt:"(Oito, nove)", en:"(Acht, neun)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"O Sol se ilumina das minhas mãos", en:"Die Sonne scheint mir aus den Händen"},
-        {pt:"Pode queimar, pode te cegar", en:"Kann verbrennen, kann dich blenden"},
-        {pt:"Quando ele irrompe dos meus punhos", en:"Wenn sie aus den Fäusten bricht"},
-        {pt:"Se deita quente sobre o rosto", en:"Legt sich heiß auf dein Gesicht"},
-        {pt:"Se deita dolorosamente sobre o peito", en:"Legt sich schmerzend auf die Brust"},
-        {pt:"O equilíbrio se torna uma perda", en:"Das Gleichgewicht wird zum Verlust"},
-        {pt:"Te faz cair duro no chão", en:"Lässt dich hart zu Boden geh'n"},
-        {pt:"E o mundo conta em voz alta até dez", en:"Und die Welt zählt laut bis zehn"},
-        {pt:"(Um)", en:"(Eins)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Dois)", en:"(Zwei)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Três) ela é a estrela mais brilhante de todas", en:"(Drei) sie ist der hellste Stern von allen"},
-        {pt:"(Quatro)", en:"(Vier)"},
-        {pt:"E nunca cairá do céu", en:"Und wird nie von Himmel fallen"},
-        {pt:"(Cinco)", en:"(Fünf)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Seis)", en:"(Sechs)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"(Sete) ela é a estrela mais brilhante de todas", en:"(Sieben) sie ist der hellste Stern von allen"},
-        {pt:"(Oito, nove)", en:"(Acht, neun)"},
-        {pt:"Lá vem o Sol", en:"Hier kommt die Sonne"},
-        {pt:"Sai", en:"Aus"}
-      ]
+      {pt: "Um, dois, três", en: "Eins, zwei, drei"},
+      {pt: "Quatro, cinco, seis", en: "Vier, fünf, sechs"},
+      {pt: "Sete, oito, nove", en: "Sieben, acht, neun"},
+      {pt: "Sai", en: "Aus"},
+      {pt: "Todos esperam pela luz", en: "Alle warten auf das Licht"},
+      {pt: "Sintam medo, não sintam medo", en: "Fürchtet euch, fürchtet euch nicht"},
+      {pt: "O Sol se ilumina dos meus olhos", en: "Die Sonne scheint mir aus den Augen"},
+      {pt: "Ele não irá se pôr esta noite", en: "Sie wird heute Nacht nicht untergehen"},
+      {pt: "E o mundo conta alto até dez", en: "Und die Welt zählt laut bis zehn"},
+      {pt: "(Um)", en: "(Eins)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Dois)", en: "(Zwei)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Três) ela é a estrela mais brilhante de todas", en: "(Drei) sie ist der hellste Stern von allen"},
+      {pt: "(Quatro)", en: "(Vier)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "O Sol se ilumina das minhas mãos", en: "Die Sonne scheint mir raus den Händen"},
+      {pt: "Pode queimar, pode os cegar", en: "Kann verbrennen, kann euch blenden"},
+      {pt: "Quando ele irrompe dos meus punhos", en: "Wenn sie aus den Fäusten bricht"},
+      {pt: "Se deita quente sobre o rosto", en: "Legt sich heiß auf das Gesicht"},
+      {pt: "Ele não irá se pôr esta noite", en: "Sie wird heute Nacht nicht untergehen"},
+      {pt: "E o mundo conta alto até dez", en: "Und die Welt zählt laut bis zehn"},
+      {pt: "(Um)", en: "(Eins)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Dois)", en: "(Zwei)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Três) ela é a estrela mais brilhante de todas", en: "(Drei) sie ist der hellste Stern von allen"},
+      {pt: "(Quatro)", en: "(Vier)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Cinco)", en: "(Fünf)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Seis)", en: "(Sechs)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Sete) ela é a estrela mais brilhante de todas", en: "(Sieben) sie ist der hellste Stern von allen"},
+      {pt: "(Oito, nove)", en: "(Acht, neun)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "O Sol se ilumina das minhas mãos", en: "Die Sonne scheint mir aus den Händen"},
+      {pt: "Pode queimar, pode te cegar", en: "Kann verbrennen, kann dich blenden"},
+      {pt: "Quando ele irrompe dos meus punhos", en: "Wenn sie aus den Fäusten bricht"},
+      {pt: "Se deita quente sobre o rosto", en: "Legt sich heiß auf dein Gesicht"},
+      {pt: "Se deita dolorosamente sobre o peito", en: "Legt sich schmerzend auf die Brust"},
+      {pt: "O equilíbrio se torna uma perda", en: "Das Gleichgewicht wird zum Verlust"},
+      {pt: "Te faz cair duro no chão", en: "Lässt dich hart zu Boden geh'n"},
+      {pt: "E o mundo conta em voz alta até dez", en: "Und die Welt zählt laut bis zehn"},
+      {pt: "(Um)", en: "(Eins)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Dois)", en: "(Zwei)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Três) ela é a estrela mais brilhante de todas", en: "(Drei) sie ist der hellste Stern von allen"},
+      {pt: "(Quatro)", en: "(Vier)"},
+      {pt: "E nunca cairá do céu", en: "Und wird nie von Himmel fallen"},
+      {pt: "(Cinco)", en: "(Fünf)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Seis)", en: "(Sechs)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "(Sete) ela é a estrela mais brilhante de todas", en: "(Sieben) sie ist der hellste Stern von allen"},
+      {pt: "(Oito, nove)", en: "(Acht, neun)"},
+      {pt: "Lá vem o Sol", en: "Hier kommt die Sonne"},
+      {pt: "Sai", en: "Aus"}
     ]
   },
   {
     title: "Dream Theater - The Spirit Carries On",
     verses: [
-      [
-        {pt:"De onde nós viemos?", en:"Where did we come from?"},
-        {pt:"Porque estamos aqui?", en:"Why are we here?"},
-        {pt:"Para onde nós vamos quando morremos?", en:"Where do we go when we die?"},
-        {pt:"O que há além", en:"What lies beyond"},
-        {pt:"E o que havia antes?", en:"And what lay before?"},
-        {pt:"Alguma coisa é certa na vida?", en:"Is anything certain in life?"},
-        {pt:"Eles dizem: A vida é muito curta", en:"They say: Life is too short"},
-        {pt:"O aqui e o agora", en:"The here and the now"},
-        {pt:"E: Você só tem uma chance", en:"And: You're only given one shot"},
-        {pt:"Mas poderia haver mais", en:"But could there be more"},
-        {pt:"Eu já vivi antes", en:"Have I lived before"},
-        {pt:"Ou isso seria tudo que nós temos?", en:"Or could this be all that we've got?"},
-        {pt:"Se eu morresse amanhã", en:"If I die tomorrow"},
-        {pt:"Eu estaria bem", en:"I'd be all right"},
-        {pt:"Porque eu acredito", en:"Because I believe"},
-        {pt:"Que após nós morrermos", en:"That after we're gone"},
-        {pt:"O espírito continua", en:"The spirit carries on"},
-        {pt:"Eu costumava ter medo da morte", en:"I used to be frightened of dying"},
-        {pt:"Eu costumava achar que a morte era o fim", en:"I used to think death was the end"},
-        {pt:"Mas isso foi antes", en:"But that was before"},
-        {pt:"Eu não estou mais assustado", en:"I'm not scared anymore"},
-        {pt:"Eu sei que minha alma transcenderá", en:"I know that my soul will transcend"},
-        {pt:"Eu posso nunca encontrar as respostas", en:"I may never find all the answers"},
-        {pt:"Eu posso nunca entender por quê", en:"I may never understand why"},
-        {pt:"Eu posso nunca provar", en:"I may never prove"},
-        {pt:"O que eu sei ser verdade", en:"What I know to be true"},
-        {pt:"Mas eu sei que eu ainda tenho que tentar", en:"But I know that I still have to try"},
-        {pt:"Se eu morresse amanhã", en:"If I die tomorrow"},
-        {pt:"Eu estaria bem", en:"I'd be allright"},
-        {pt:"Porque eu acredito", en:"Because I believe"},
-        {pt:"Que após nós morrermos", en:"That after we're gone"},
-        {pt:"O espírito continua", en:"The spirit carries on"},
-        {pt:"Siga adiante, seja corajoso", en:"Move on, be brave"},
-        {pt:"Não chore no meu túmulo", en:"Don't weep at my grave"},
-        {pt:"Porque eu não estou mais aqui", en:"Because I am no longer here"},
-        {pt:"Mas por favor nunca deixe", en:"But please never let"},
-        {pt:"Suas lembranças de mim desaparecerem", en:"Your memory of me disappear"},
-        {pt:"Seguro na luz que me rodeia", en:"Safe in the light that surrounds me"},
-        {pt:"Livre do medo e da dor", en:"Free of the fear and the pain"},
-        {pt:"Minha mente questionadora", en:"My questioning mind"},
-        {pt:"Tem me ajudado a achar", en:"Has helped me to find"},
-        {pt:"O significado na minha vida de novo", en:"The meaning in my life again"},
-        {pt:"Victoria é real", en:"Victoria's real"},
-        {pt:"Eu finalmente sinto", en:"I finally feel"},
-        {pt:"Em paz com a garota nos meus sonhos", en:"At peace with the girl in my dreams"},
-        {pt:"E agora que eu estou aqui", en:"And now that I'm here"},
-        {pt:"Está perfeitamente claro", en:"It's perfectly clear"},
-        {pt:"Eu descobri o que tudo isso significa", en:"I found out what all of this means"},
-        {pt:"Se eu morresse amanhã", en:"If I die tomorrow"},
-        {pt:"Eu estaria bem", en:"I'd be allright"},
-        {pt:"Porque eu acredito", en:"Because I believe"},
-        {pt:"Que após nós morrermos", en:"That after we're gone"},
-        {pt:"O espírito continua", en:"The spirit carries on"}
-      ]
-    ]
-  },
-  {
-    title: "Black Sabbath - N.I.B",
-    verses: [
-      [
-        {pt:"Oh, sim", en:"Oh, yeah"},
-        {pt:"Algumas pessoas dizem que meu amor não pode ser verdadeiro", en:"Some people say my love cannot be true"},
-        {pt:"Por favor, acredite em mim, meu amor, e eu vou te mostrar", en:"Please, believe me, my love, and I'll show you"},
-        {pt:"Eu vou te dar aquelas coisas que você achava irreais", en:"I will give you those things you thought unreal"},
-        {pt:"O Sol, a Lua, as estrelas, tudo carrega o meu selo", en:"The Sun, the Moon, the stars, all bear my seal"},
-        {pt:"Me siga agora e você não vai se arrepender", en:"Follow me now and you will not regret"},
-        {pt:"De deixar a vida que levava antes de nos conhecermos", en:"Leaving the life you led before we met"},
-        {pt:"Você é a primeira a ter esse meu amor", en:"You are the first to have this love of mine"},
-        {pt:"Para sempre comigo, até o fim dos tempos", en:"Forever with me till the end of time"},
-        {pt:"Seu amor por mim tem que ser real", en:"Your love for me has just got to be real"},
-        {pt:"Antes que você saiba como eu vou me sentir", en:"Before you know the way I'm going to feel"},
-        {pt:"Eu vou me sentir", en:"I'm going to feel"},
-        {pt:"Agora você está sob o meu poder", en:"Now I have you with me under my power"},
-        {pt:"Nosso amor fica mais forte a cada hora", en:"Our love grows stronger now with every hour"},
-        {pt:"Olhe nos meus olhos, você verá quem eu sou", en:"Look into my eyes, you'll see who I am"},
-        {pt:"Meu nome é Lúcifer, por favor, me dê a mão", en:"My name is Lucifer, please, take my hand"}
-      ]
-    ]
-  },
-  {
-    title: "Ozzy Osbourne - Mr. Crowley",
-    verses: [
-      [
-        {pt:"Senhor Crowley", en:"Mister Crowley"},
-        {pt:"O que se passava na sua cabeça?", en:"What went on in your head?"},
-        {pt:"Oh, Senhor Crowley", en:"Oh, Mister Crowley"},
-        {pt:"O senhor conversava com os mortos?", en:"Did you talk to the dead?"},
-        {pt:"Seu estilo de vida, para mim, parecia tão trágico", en:"Your lifestyle, to me, seemed so tragic"},
-        {pt:"Com toda aquela adrenalina", en:"With the thrill of it all"},
-        {pt:"O senhor enganou todo mundo com mágica", en:"You fooled all the people with magic"},
-        {pt:"É, o senhor esperava pelo chamado de Satanás", en:"Yeah, you waited on Satan's call"},
-        {pt:"Senhor Encantador", en:"Mister Charming"},
-        {pt:"O senhor achava que era puro?", en:"Did you think you were pure?"},
-        {pt:"Senhor Alarmante", en:"Mister Alarming"},
-        {pt:"Por meio de conexões noturnas", en:"In nocturnal rapport"},
-        {pt:"Descobriu coisas que eram sagradas", en:"Uncovering things that were sacred"},
-        {pt:"Se manifestando aqui na Terra", en:"Manifest on this Earth"},
-        {pt:"Concebidas no olhar de um segredo", en:"Conceived in the eye of a secret"},
-        {pt:"E espalhadas como se fossem placenta", en:"And they scattered the afterbirth"},
-        {pt:"Senhor Crowley", en:"Mister Crowley"},
-        {pt:"O senhor não quer montar no meu cavalo branco?", en:"Won't you ride my white horse?"},
-        {pt:"Senhor Crowley", en:"Mister Crowley"},
-        {pt:"Simbolicamente, é claro", en:"It's symbolic, of course"},
-        {pt:"Um tempo que é clássico está se aproximando", en:"Approaching a time that is classic"},
-        {pt:"Eu ouço aquele chamado da donzela", en:"I hear that maiden's call"},
-        {pt:"Um tempo que é intenso está se aproximando", en:"Approaching a time that is drastic"},
-        {pt:"Eles estão ficando de costas para a parede", en:"Standing with their backs to the wall"},
-        {pt:"Foi uma mensagem polêmica?", en:"Was it polemically sent?"},
-        {pt:"Quero saber o que o senhor quis dizer", en:"I wanna know what you meant"},
-        {pt:"Quero saber", en:"I wanna know"},
-        {pt:"Quero saber o que o senhor quis dizer, é", en:"I wanna know what you meant, yeah"}
-      ]
-    ]
-  },
-  {
-    title: "Iced Earth - Ghost of Freedom",
-    verses: [
-      [
-        {pt:"Toda vez que você pensa sobre isso", en:"Every time you think about it"},
-        {pt:"E isso te corta por dentro", en:"It tears you up inside"},
-        {pt:"Você amaldiçoa o dia em que sua mãe", en:"You curse the day your mother"},
-        {pt:"Disse que seu pai morreu", en:"Told you, your father died"},
-        {pt:"Agora você está sempre procurando", en:"Now you're always searching"},
-        {pt:"Procurando a razão de eu ter ido embora", en:"Searching for the reason why I've gone"},
-        {pt:"Mas eu sempre estarei aqui", en:"But I will always be here"},
-        {pt:"Do seu lado, na noite mais escura", en:"By your side, through the darkest night"},
-        {pt:"Aqui estou em pé, na linha de fogo", en:"Here I'll stand on the firing line"},
-        {pt:"Aqui eu andarei no campo onde eu morri", en:"Here I'll walk through the field where I died"},
-        {pt:"Eu lutarei e deixarei minha voz ecoar a verdade", en:"I will fight and let the voice ring true"},
-        {pt:"Eu sou o espírito", en:"I am the ghost"},
-        {pt:"Em pé, próximo a você", en:"Standing next to you"},
-        {pt:"Toda noite que você vai dormir", en:"Every night you go to sleep"},
-        {pt:"Você reza para o Senhor guardar minha alma", en:"You pray the Lord my soul to keep"},
-        {pt:"Você não sabe, eu não fui embora", en:"You don't know I've not gone away"},
-        {pt:"Você vê, eu observo os homens lutando", en:"You see I watch over fighting men"},
-        {pt:"E assim eles poderão ter paz novamente", en:"So they can have peace again"},
-        {pt:"E talvez um dia você todos estarão livres", en:"And maybe someday you will all be free"},
-        {pt:"Aqui estou em pé, na linha de fogo", en:"Here I'll stand on the firing line"},
-        {pt:"Aqui eu andarei no campo onde eu lutei", en:"Here I'll walk in the field where I fight"},
-        {pt:"Eu irei lutar ou morrer por liberdade", en:"I will fight of die for liberty"},
-        {pt:"Com o espírito próximo de mim", en:"With the ghost standing next to me"},
-        {pt:"Não pise em mim, viva livre ou morra!", en:"Don't tread on me, live free or die!"},
-        {pt:"Por nossos irmãos caídos", en:"To our fallen brothers"},
-        {pt:"Você morreu para nos manter livres", en:"You died to keep us free"},
-        {pt:"Por nossos irmãos caídos", en:"To our fallen brothers"},
-        {pt:"Que nos deram liberdade!", en:"Who gave us liberty!"}
-      ]
+      {pt: "De onde nós viemos?", en: "Where did we come from?"},
+      {pt: "Porque estamos aqui?", en: "Why are we here?"},
+      {pt: "Para onde nós vamos quando morremos?", en: "Where do we go when we die?"},
+      {pt: "O que há além", en: "What lies beyond"},
+      {pt: "E o que havia antes?", en: "And what lay before"},
+      {pt: "Alguma coisa é certa na vida?", en: "Is anything certain in life?"},
+      {pt: "Eles dizem: A vida é muito curta", en: "They say: Life is too short"},
+      {pt: "O aqui e o agora", en: "The here and the now"},
+      {pt: "E: Você só tem uma chance", en: "And: You're only given one shot"},
+      {pt: "Mas poderia haver mais", en: "But could there be more"},
+      {pt: "Eu já vivi antes", en: "Have I lived before"},
+      {pt: "Ou isso seria tudo que nós temos?", en: "Or could this be all that we've got?"},
+      {pt: "Se eu morresse amanhã", en: "If I die tomorrow"},
+      {pt: "Eu estaria bem", en: "I'd be all right"},
+      {pt: "Porque eu acredito", en: "Because I believe"},
+      {pt: "Que após nós morrermos", en: "That after we're gone"},
+      {pt: "O espírito continua", en: "The spirit carries on"},
+      {pt: "Eu costumava ter medo da morte", en: "I used to be frightened of dying"},
+      {pt: "Eu costumava achar que a morte era o fim", en: "I used to think death was the end"},
+      {pt: "Mas isso foi antes", en: "But that was before"},
+      {pt: "Eu não estou mais assustado", en: "I'm not scared anymore"},
+      {pt: "Eu sei que minha alma transcenderá", en: "I know that my soul will transcend"},
+      {pt: "Eu posso nunca encontrar as respostas", en: "I may never find all the answers"},
+      {pt: "Eu posso nunca entender por quê", en: "I may never understand why"},
+      {pt: "Eu posso nunca provar", en: "I may never prove"},
+      {pt: "O que eu sei ser verdade", en: "What I know to be true"},
+      {pt: "Mas eu sei que eu ainda tenho que tentar", en: "But I know that I still have to try"},
+      {pt: "Se eu morresse amanhã", en: "If I die tomorrow"},
+      {pt: "Eu estaria bem", en: "I'd be allright"},
+      {pt: "Porque eu acredito", en: "Because I believe"},
+      {pt: "Que após nós morrermos", en: "That after we're gone"},
+      {pt: "O espírito continua", en: "The spirit carries on"},
+      {pt: "Siga adiante, seja corajoso", en: "Move on, be brave"},
+      {pt: "Não chore no meu túmulo", en: "Don't weep at my grave"},
+      {pt: "Porque eu não estou mais aqui", en: "Because I am no longer here"},
+      {pt: "Mas por favor nunca deixe", en: "But please never let"},
+      {pt: "Suas lembranças de mim desaparecerem", en: "Your memory of me disappear"},
+      {pt: "Seguro na luz que me rodeia", en: "Safe in the light that surrounds me"},
+      {pt: "Livre do medo e da dor", en: "Free of the fear and the pain"},
+      {pt: "Minha mente questionadora", en: "My questioning mind"},
+      {pt: "Tem me ajudado a achar", en: "Has helped me to find"},
+      {pt: "O significado na minha vida de novo", en: "The meaning in my life again"},
+      {pt: "Victoria é real", en: "Victoria's real"},
+      {pt: "Eu finalmente sinto", en: "I finally feel"},
+      {pt: "Em paz com a garota nos meus sonhos", en: "At peace with the girl in my dreams"},
+      {pt: "E agora que eu estou aqui", en: "And now that I'm here"},
+      {pt: "Está perfeitamente claro", en: "It's perfectly clear"},
+      {pt: "Eu descobri o que tudo isso significa", en: "I found out what all of this means"},
+      {pt: "Se eu morresse amanhã", en: "If I die tomorrow"},
+      {pt: "Eu estaria bem", en: "I'd be allright"},
+      {pt: "Porque eu acredito", en: "Because I believe"},
+      {pt: "Que após nós morrermos", en: "That after we're gone"},
+      {pt: "O espírito continua", en: "The spirit carries on"}
     ]
   }
+  // As outras músicas você pode continuar na mesma estrutura
 ];
 
 let currentSong = 0;
 let currentVerse = 0;
 
-const titleEl = document.getElementById("songTitle");
-const lyricsEl = document.getElementById("lyricsBox");
-
-function renderVerse() {
-  const song = songs[currentSong];
-  const verse = song.verses[currentVerse];
-  titleEl.textContent = song.title;
-  lyricsEl.innerHTML = "";
-  verse.forEach(line => {
-    const lineEl = document.createElement("div");
-    lineEl.className = "line";
-    lineEl.innerHTML = `${line.pt} <br><span class="translation">${line.en}</span>`;
-    lyricsEl.appendChild(lineEl);
-  });
+function showVerse() {
+  document.getElementById('verse').innerText = songs[currentSong].verses[currentVerse].pt;
+  document.getElementById('english').innerText = songs[currentSong].verses[currentVerse].en;
 }
 
-document.addEventListener("keydown", e => {
-  if(e.key === "ArrowRight"){
-    if(currentVerse < songs[currentSong].verses.length-1) currentVerse++;
-    renderVerse();
+document.addEventListener('keydown', function(event) {
+  if(event.key === 'ArrowDown') {
+    if(currentVerse < songs[currentSong].verses.length - 1) currentVerse++;
+    showVerse();
   }
-  if(e.key === "ArrowLeft"){
+  else if(event.key === 'ArrowUp') {
     if(currentVerse > 0) currentVerse--;
-    renderVerse();
+    showVerse();
   }
-  if(e.key === "ArrowDown"){
-    if(currentSong < songs.length-1) { currentSong++; currentVerse=0; renderVerse(); }
+  else if(event.key === 'ArrowRight') {
+    if(currentSong < songs.length - 1) {
+      currentSong++;
+      currentVerse = 0;
+      showVerse();
+    }
   }
-  if(e.key === "ArrowUp"){
-    if(currentSong > 0) { currentSong--; currentVerse=0; renderVerse(); }
+  else if(event.key === 'ArrowLeft') {
+    if(currentSong > 0) {
+      currentSong--;
+      currentVerse = 0;
+      showVerse();
+    }
   }
 });
 
-renderVerse();
+showVerse();
 </script>
 </body>
 </html>
