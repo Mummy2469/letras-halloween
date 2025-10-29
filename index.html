@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Letra Traduzida — Halloween Live</title>
+  <!-- Fonte gótica leve via Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --orange: #ff7a18;
+      --black: rgba(0,0,0,0.85);
+      --glass: rgba(0,0,0,0.45);
+    }
+    html,body{height:100%;margin:0;background:transparent;}
+    body{
+      font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--orange);
+    }
+    .stage{
+      width:100%;max-width:1200px;padding:28px;box-sizing:border-box;
+      display:flex;flex-direction:column;gap:18px;align-items:center;
+      text-align:center;
+    }
+    .title{
+      font-size:30px;font-weight:700;color:var(--orange);
+      text-shadow: 0 2px 0 var(--black), 0 6px 18px rgba(0,0,0,0.6);
+    }
+    .subtitle{font-size:14px;color:#ffd7b3;opacity:0.9}
+    .lyrics-box{
+      width:100%;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55));
+      padding:28px;border-radius:14px;backdrop-filter: blur(4px);
+      box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    }
+    .verse{
+      font-size:28px;line-height:1.4;margin:10px 0;min-height:3.2em;
+      text-shadow:
+        -2px -2px 0 var(--black), 2px 2px 0 var(--black),
+        0 8px 24px rgba(0,0,0,0.7);
+      word-wrap:break-word;
+    }
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:#ffb87a}
+    .controls{display:flex;gap:10px;align-items:center}
+    .kbd{background:var(--black);padding:6px 8px;border-radius:6px;color:var(--orange);font-weight:700}
+    .small{font-size:13px;color:#ffd7b3}
+    .progress{height:8px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;margin-top:12px}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),#ffb84d);width:0%}
+    .hint{position:fixed;left:16px;bottom:16px;background:var(--black);padding:10px 12px;border-radius:8px;color:var(--orange);font-size:13px}
+    /* botão visível para trocar versos (útil em tablets) */
+    .btns{display:flex;gap:8px}
+    button{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--orange);padding:8px 12px;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+    @media (max-width:600px){
+      .title{font-size:20px}
+      .verse{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="title" id="songTitle">Carregando...</div>
+    <div class="subtitle" id="songSubtitle">Use ↑/↓ para música — ←/→ para verso</div>
+
+    <div class="lyrics-box">
+      <div class="verse" id="verseText">Cole aqui as traduções: abra este arquivo no editor de texto e substitua os placeholders dentro da parte &quot;TRADUCOES&quot;.</div>
+
+      <div class="meta">
+        <div class="small" id="verseCounter">Verso 0 / 0</div>
+        <div class="controls">
+          <div class="kbd">↑</div>
+          <div class="kbd">↓</div>
+          <div style="width:8px"></div>
+          <div class="kbd">←</div>
+          <div class="kbd">→</div>
+        </div>
+      </div>
+
+      <div class="progress" aria-hidden>
+        <i id="progressBar"></i>
+      </div>
+
+      <div style="margin-top:14px;display:flex;justify-content:center;gap:10px;align-items:center">
+        <div class="btns">
+          <button id="prevVerse">◀ Verso</button>
+          <button id="nextVerse">Verso ▶</button>
+        </div>
+        <div style="width:8px"></div>
+        <div class="btns">
+          <button id="prevSong">⬆ Música</button>
+          <button id="nextSong">Música ⬇</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="hint">Dica: edite este arquivo e substitua os textos em <strong>TRADUCOES</strong> pelas traduções completas. Salve e atualize a página.</div>
+
+  <script>
+    /* === TRADUCOES ===
+       Preencha os arrays abaixo: cada música é um objeto {title, subtitle?, verses: ["verso1","verso2",...]}
+       Substitua os textos "Cole a tradução..." pelos versos traduzidos para cada música.
+       Mantenha as aspas e vírgulas.
+    */
+    const songs = [
+      { title: "Tainted Love - Broken Peach Version", verses: ["Cole a tradução do verso 1...","Cole a tradução do verso 2..."] },
+      { title: "The Dead Dance - Lady Gaga", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Until My Last Breath - Tarja", verses: ["Cole a tradução do verso 1..."] },
+      { title: "I Put a Spell On You - Sanderson Sisters", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Thriller - Michael Jackson", verses: ["Cole a tradução do verso 1..."] },
+      { title: "No Good Deed - Wicked", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Haunted - Evanescence", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Dr. Stein - Helloween", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Planet Hell - Nightwish", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Running Up That Hill - Kate Bush", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Aerials - System of a Down", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Wish I Had An Angel - Nightwish", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Wuthering Heights - Angra", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Halloween - Siouxsie and the Banshees", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Tears of the Dragon - Bruce Dickinson", verses: ["Cole a tradução do verso 1..."] },
+      { title: "As The World Falls Down - David Bowie", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Rammstein - Sonne", verses: ["Uma luz que nos empurra, como um chamado ao trabalho.","O sol surge forte — dá ritmo e força à multidão.","Buscamos sua chama como quem espera por um rei; ela guia nossos passos.","No silêncio da manhã, sua luz nos domina e tudo se revela."] },
+      { title: "Dream Theater - The Spirit Carries On", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Black Sabbath - N.I.N", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Mr. Crowley - Ozzy", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Ghost of Freedom - Iced Earth", verses: ["Cole a tradução do verso 1..."] },
+      { title: "Kissing the Crow - Adagio", verses: ["Cole a tradução do verso 1..."] }
+    ];
+    /* ===================== */
+
+    let songIndex = 0;
+    let verseIndex = 0;
+
+    const songTitle = document.getElementById('songTitle');
+    const verseText = document.getElementById('verseText');
+    const verseCounter = document.getElementById('verseCounter');
+    const progressBar = document.getElementById('progressBar');
+
+    function render(){
+      const s = songs[songIndex];
+      const total = s.verses.length;
+      const v = s.verses[verseIndex] || "";
+      songTitle.textContent = s.title;
+      verseText.innerHTML = v.replace(/\n/g,'<br>');
+      verseCounter.textContent = `Verso ${verseIndex+1} / ${total} — Música ${songIndex+1} / ${songs.length}`;
+      progressBar.style.width = `${Math.round(((verseIndex+1)/total)*100)}%`;
+    }
+
+    function nextVerse(){
+      const total = songs[songIndex].verses.length;
+      if(verseIndex < total-1) verseIndex++; else verseIndex = total-1;
+      render();
+    }
+    function prevVerse(){
+      if(verseIndex > 0) verseIndex--; else verseIndex = 0;
+      render();
+    }
+    function nextSong(){
+      if(songIndex < songs.length-1) songIndex++; else songIndex = 0;
+      verseIndex = 0; render();
+    }
+    function prevSong(){
+      if(songIndex > 0) songIndex--; else songIndex = songs.length-1;
+      verseIndex = 0; render();
+    }
+
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight') nextVerse();
+      if(e.key === 'ArrowLeft') prevVerse();
+      if(e.key === 'ArrowDown') nextSong();
+      if(e.key === 'ArrowUp') prevSong();
+    });
+
+    document.getElementById('nextVerse').addEventListener('click', nextVerse);
+    document.getElementById('prevVerse').addEventListener('click', prevVerse);
+    document.getElementById('nextSong').addEventListener('click', nextSong);
+    document.getElementById('prevSong').addEventListener('click', prevSong);
+
+    // Carrega inicial
+    render();
+
+    // Mensagem curta para facilitar edição: clique 2x no verso para copiar texto
+    verseText.addEventListener('dblclick', ()=>{
+      navigator.clipboard && navigator.clipboard.writeText(verseText.innerText);
+      alert('Verso copiado para a área de transferência. Edite o arquivo HTML para atualizar o texto permanentemente.');
+    });
+
+  </script>
+</body>
+</html>
